@@ -1,0 +1,139 @@
+import java.util.Scanner;
+
+// this program starts the user with $100 and then tells the user to place a bet money and 
+// make a guess on whether the total of the two die rolls would be high (above 7), seven (exactly 7),
+// or low (under 7). The program then tells the user how much is left and continues the game
+ 
+ 
+public class CasinoGame {
+        public static void main(String[] args) {
+        	Scanner in = new Scanner(System.in);
+        	int amount = 100, roll1,roll2;
+        	int bet;
+        	char c;
+        	int lost_or_win; 
+        	int n = 0;
+        	int i = 0;
+        	System.out.println("You have 100 dollars ");
+        
+      
+        	// do this while the condition is true
+        	do{
+        	if(amount == 0 || amount < 0) {
+        		break;
+        	}  
+        		bet  = getBet(in, amount);
+        	if(bet == 0) {
+        		System.out.println();
+        		System.out.println("You have " + amount +  " dollars ");
+        		System.out.println("Goodbye!");
+        		break;
+        	}       	
+        	// initialize variables and print statements
+        		c = getHighLow(in);
+        		roll1 = getRoll();
+        		System.out.println("Die 1 rolls : "+ roll1);
+        		roll2 = getRoll();
+        		int roll = roll1 + roll2; 
+        		System.out.println("Die 2 rolls : "+ roll2);
+        		System.out.println("Total of two dice is: " + roll);
+        		lost_or_win = determineWinnings(c,bet, roll1, roll2, amount,n, i);
+        		if (lost_or_win < amount) {
+        			amount = amount - bet;
+        		}
+        		if (lost_or_win > amount && bet != 0) {
+        			amount = amount + bet;
+        		}
+        		
+        	}while(true);
+        }
+        
+        	
+        
+
+
+        
+    	// an integer representing the number of dollars that they want to bet.  This
+    	// number must be between 0 and to maximum number of dollars.  If the user enters
+    	// a number that is out of bounds, display an error message and ask again.
+    	// Return the bet to the calling program.
+        private static int getBet(Scanner inScanner, int currentPool) {
+        		System.out.print("Enter an amount to bet (0 to quit): ");
+        		int result = inScanner.nextInt();
+        		if(result > currentPool || result < 0)
+        		{
+        			// do this while the result is greater than the amount of money you have
+        			do
+        			{
+        				System.out.println("Your bet MUST be between 0 and " + currentPool + " dollars");
+        				System.out.println("You have " + currentPool +  " dollars ");
+        				System.out.print("Enter an amount to bet (0 to quit): ");
+        				result = inScanner.nextInt();	
+        			}while(result > currentPool || result < 0);
+        		}
+        		return result;
+        }
+ 
+        
+       //prompt the user for a single character indicating whether they
+    	// would like to bet High ('H'), Low ('L') or Sevens ('S').
+       private static char getHighLow(Scanner inScanner) {
+    	    int counter = 0;
+    	while (counter == 0) {   
+        System.out.print("High, low or sevens (H/L/S): ");
+	     String str = inScanner.next();
+	     if (str.charAt(0) == 'H' || str.charAt(0) == 'h' || str.charAt(0) == 'L'
+	    		 || str.charAt(0) == 'l'|| str.charAt(0) == 'S'|| str.charAt(0) == 's'){
+	    	 counter = 1;
+	    	 return str.charAt(0);
+	    	 
+	     }
+         }
+		return 0;
+       }
+ 
+       
+    // Produce a random roll of a single six-sided die and return that value to the calling
+   	// program
+        private static int getRoll() {
+        	return (int)(Math.random()*6) + 1;
+        }
+ 
+        
+      //  Given the choice of high, low or sevens, the player's bet and the total result of
+    	// the roll of the dice, determine how much the player has won.
+       private static int determineWinnings(char c, int bet, int roll1, int roll2,  int amount, int n, int i) {
+    	   int total = roll1 + roll2;
+    	   // conditions for the roll and bet of high, low, and seven
+    	   if (total == 7 && c == 'S'|| total == 7 && c == 's') {	   
+				int seven = 4*bet;
+				System.out.println("You won " + seven + " dollars!");		
+				amount = amount + seven;
+			}
+    	   		else if (total != 7 && c == 'S'|| total != 7 && c == 's') {	
+				System.out.println("You lost!");	
+				amount = amount - bet;
+			}
+		if (total >= 8 && c == 'H'|| total >= 8 && c == 'h') {
+				System.out.println("You won " + bet + " dollars!");		
+				amount = amount + bet;
+			}
+			else if (total < 8 && c == 'H'|| total < 8 && c == 'h'){			
+				System.out.println("You lost!");	
+				amount = amount - bet;
+			}
+		if (total <= 6 && c == 'L'|| total <= 6 && c == 'l') {
+				System.out.println("You won " + bet + " dollars!");
+				amount = amount + bet;
+			}
+			else if (total > 6 && c == 'L'|| total > 6 && c == 'l'){				
+				System.out.println("You lost!");	
+				amount = amount - bet;
+			}
+		System.out.println();
+		System.out.println("You have " + amount +  " dollars ");
+		 return amount;  
+		 
+}
+      
+}
