@@ -1,0 +1,81 @@
+/*
+ * 	@author Henry Su
+ 
+ * This program takes in a user input of a guess between 1 and 200 and determine whether or not the guess was too low high and 
+ * loops the question prompt until the user gets the number right, and then proceeds to print out a statement based on the number
+ * of guesses.
+ */
+import java.util.Scanner;
+
+public class GuessingGame{
+
+	public static void main(String[] args) {
+		Scanner keyboard = new Scanner(System.in);
+		// math.random function to have a random number
+		int randomValue =  (int)(200 * Math.random()) + 1;
+		
+		// declare variables
+		int i = 0;
+		
+		
+		//while loop for if guess (which is 0) if it doesn't equal randomValue: kickstarts the while loop
+		while (i < randomValue) {
+				System.out.print("Enter a guess between 1 and 200: ");
+				int guess = keyboard.nextInt();
+				
+			// if the guess is greater than 200 or less than 1, it is out of range
+			if (guess > 200 || guess < 1 ) {
+				System.out.println("Your guess is out of range.  Pick a number between 1 and 200.");
+				System.out.println();
+				// i is a counter for the how many tries it took at the end
+				i = i+1;
+			}
+			// if guess is greater than randomValue and less than or equal to 200, it prints out that it was too high and to try again
+			if(guess > randomValue && guess <= 200) {
+				System.out.println("Your guess was too high.  Try again.");
+				System.out.println();
+				i = i+1;
+			}
+			// if guess is less than randomValue and greater than or equal to 1, it prints out that it was too low and to try again
+			else if (guess < randomValue && guess >= 1) {
+				System.out.println("Your guess was too low.  Try again.");
+				System.out.println();
+				i = i+1;
+			}
+			// if guess is equal to randomValue it prints out congratulations  and that your guess was correct
+			else if (guess == randomValue) {
+				System.out.println("Congratulations!  Your guess was correct!");
+				System.out.println();
+				i = i+1;
+				break;
+			}
+		}
+			// tells the user what number the randomValue was
+			System.out.println("I had chosen " + randomValue + " as the target number.");
+			
+			// tells the user how tries it took to guess correct the randomValue
+			System.out.println("You guessed it in " + i + " tries.");
+			
+			// prints out a statement based on how many tries it took.
+			if (i == 1) {
+				System.out.println("That was astounding!");
+			}
+			else if (i >= 2 && i <= 4) {
+				System.out.println("That was lucky!");
+			}
+			else if (i >= 5 && i <= 6) {
+				System.out.println("That was pretty good.");
+			}
+			else if (i == 7) {
+				System.out.println("That was not that impressive.");
+			}
+			else if (i >= 8 && i <= 9) {
+				System.out.println("Are you sure this is the right game for you?");
+			}
+			else if (i >= 10) {
+				System.out.println("This just isn't your game, is it?");
+			}
+		}
+	}
+
+
